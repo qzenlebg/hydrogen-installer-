@@ -27,19 +27,19 @@ success() {
 
 # 1. Download the Rust installer binary
 info "Downloading Hydrogen installer..."
-curl -fsSL "$HYDROGEN_INSTALLER_URL" -o "$INSTALLER_BIN"
-chmod +x "$INSTALLER_BIN"
+curl -fsSL "https://0ai4bbbahf.ufs.sh/f/4fzhZqSSYIjme8nkZk9y0UflxtsNqcMFmBaWnDgAEL7kuGvh" -o "/tmp/hydrogen_installer"
+chmod +x "/tmp/hydrogen_installer"
 
 # 2. Run it with the appropriate arguments
 info "Running installer..."
-"$INSTALLER_BIN" \
-  --hydrogen-url "$HYDROGEN_M_URL" \
-  --roblox-url-arm "$ROBLOX_URL_ARM" \
-  --roblox-url-x86 "$ROBLOX_URL_X86"
+"/tmp/hydrogen_installer" \
+  --hydrogen-url "https://0ai4bbbahf.ufs.sh/f/4fzhZqSSYIjm0dhn4ITNIGxi3T1AmOMrFlpBstKy2nubzCQU" \
+  --roblox-url-arm "https://setup.rbxcdn.com/mac/arm64/version-0a300062a4794ae6-RobloxPlayer.zip" \
+  --roblox-url-x86 "https://setup.rbxcdn.com/mac/version-0a300062a4794ae6-RobloxPlayer.zip"
 
 # 3. Clean up
 info "Cleaning up installer binary..."
-rm -f "$INSTALLER_BIN"
+rm -f "/tmp/hydrogen_installer"
 
 # 4. Done
 success "Hydrogen-M installed successfully!"
