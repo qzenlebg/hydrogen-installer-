@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luau Editor for Roblox</title>
+  <!-- JetBrains Mono and Inter fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet" />
+  <!-- Monaco Editor CSS -->
+  <link rel="stylesheet" data-name="vs/editor/editor.main"
+    href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.39.0/min/vs/editor/editor.main.min.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Your App Styles -->
+  <!-- Make sure these paths are correct relative to index.html -->
+  <link rel="stylesheet" href="styles/auth.css" />
+  <link rel="stylesheet" href="styles/editor.css" />
+  <link rel="stylesheet" href="styles/main.css" />
+  <script type='text/javascript'
+    src='//pl26438380.profitableratecpm.com/75/87/a2/7587a256c70cc8145aa099a3be871ad6.js'></script>
+</head>
+
+<body>
+  <!-- Main Editor Interface -->
+  <div id="editor-app">
+    <!-- Main app container -->
+    <div class="app-container">
+      <div class="main-container">
+        <!-- Top Toolbar -->
+        <div class="editor-toolbar">
+          <div class="toolbar-section">
+            <button id="new-file-btn" class="toolbar-btn" data-tooltip="New Script">
+              <i class="fas fa-plus"></i>
+              <span>New</span>
+            </button>
+            <button id="open-file-btn" class="toolbar-btn" data-tooltip="Open File">
+              <i class="fas fa-folder-open"></i>
+              <span>Open</span>
+            </button>
+            <button id="save-btn" class="toolbar-btn" data-tooltip="Save (Ctrl+S)">
+              <i class="fas fa-save"></i>
+              <span>Save</span>
+            </button>
+            <button id="save-as-btn" class="toolbar-btn" data-tooltip="Save As (Ctrl+Shift+S)">
+              <i class="fas fa-file-export"></i>
+              <span>Save As</span>
+            </button>
+          </div>
+          <div class="toolbar-section">
+            <button id="run-btn" class="toolbar-btn primary-toolbar-btn" data-tooltip="Run Current Script">
+              <i class="fas fa-play"></i>
+              <span>Run Script</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Main Editor Area -->
+        <div class="editor-main-area">
+          <!-- Renamed container for clarity -->
+          <!-- Tabs -->
+          <div class="editor-tabs" id="editor-tabs">
+            <!-- Tabs will be added dynamically -->
+          </div>
+
+          <!-- Monaco Editor Container -->
+          <!-- Ensure this container is visible when files are open -->
+          <div id="monaco-editor" style="display: none"></div>
+
+          <!-- Empty state when no file is open -->
+          <div id="editor-empty-state" class="editor-empty-state" style="display: flex">
+            <!-- Start visible -->
+            <div class="empty-state-content">
+              <svg width="80" height="80" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"
+                class="welcome-logo">
+                <rect x="10" y="10" width="80" height="80" rx="16" fill="#00A2FF" />
+                <path d="M35 35L65 65M35 65L65 35" stroke="white" stroke-width="8" stroke-linecap="round" />
+              </svg>
+              <h2>Welcome to Hydrogen-M</h2>
+              <p>
+                Create a new script or open an existing one to get started
+              </p>
+              <div class="empty-actions">
+                <button id="empty-new-btn" class="primary-btn">
+                  <i class="fas fa-plus"></i> New Script
+                </button>
+                <button id="empty-open-btn" class="secondary-btn">
+                  <i class="fas fa-folder-open"></i> Open Script
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Panel -->
+      <div class="bottom-panel">
+        <div class="user-card" id="user-card">
+          <div class="user-avatar">
+            <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="User" />
+          </div>
+          <div class="user-info">
+            <div class="user-name">Guest User</div>
+            <div class="user-status">
+              <span class="status-indicator online"></span> Online
+            </div>
+          </div>
+          <div class="user-actions">
+            <button id="settings-btn" class="icon-btn" data-tooltip="Settings">
+              <i class="fas fa-cog"></i>
+            </button>
+            <button id="logout-btn" class="icon-btn" data-tooltip="Log out">
+              <i class="fas fa-sign-out-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div class="editor-status">
+          <div class="status-item" id="syntax-status">
+            <i class="fas fa-code"></i> <span>-</span>
+          </div>
+          <div class="status-item" id="cursor-position">
+            <span>Ln 1, Col 1</span>
+          </div>
+          <div class="status-item">
+            <i class="fas fa-info-circle"></i> <span>Hydrogen-M</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Panel (Keep as is) -->
+    <div id="settings-panel" class="settings-panel">
+      <div class="settings-header">
+        <h2>Settings</h2>
+        <button id="close-settings-btn" class="icon-btn" title="Close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <form id="settings-form" class="settings-form">
+        <div class="form-group">
+          <label for="font-size">Font Size</label>
+          <select id="font-size">
+            <option value="12">12</option>
+            <option value="14">14</option>
+            <option value="16">16</option>
+            <option value="18">18</option>
+            <option value="20">20</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="tab-size">Tab Size</label>
+          <select id="tab-size">
+            <option value="2">2</option>
+            <option value="4">4</option>
+            <option value="8">8</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="word-wrap">
+            <input type="checkbox" id="word-wrap" />
+            Word Wrap
+          </label>
+        </div>
+        <div class="form-group">
+          <label for="editor-theme">Theme</label>
+          <select id="editor-theme">
+            <option value="vs-dark">Dark</option>
+            <option value="vs-light">Light</option>
+            <option value="hc-black">High Contrast</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="auto-save">
+            <input type="checkbox" id="auto-save" />
+            Auto Save
+          </label>
+        </div>
+        <div class="settings-actions">
+          <button type="button" id="save-settings-btn" class="primary-btn">Save</button>
+          <button type="button" id="reset-settings-btn" class="secondary-btn">Reset to Defaults</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- End #editor-app -->
+
+  <!-- Modal for creating a new file (Keep as is) -->
+  <div id="new-file-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Create New Luau Script</h3>
+        <button id="close-new-file-modal" class="icon-btn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="new-file-name">File Name</label>
+          <input type="text" id="new-file-name" placeholder="Enter file name (e.g., Script.lua)" />
+        </div>
+        <div class="form-group">
+          <label for="new-file-template">Template</label>
+          <select id="new-file-template">
+            <option value="empty">Empty Script</option>
+            <option value="script">Basic Script</option>
+            <option value="localscript">Local Script</option>
+            <option value="moduleScript">Module Script</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="create-file-btn" class="primary-btn">Create</button>
+        <button id="cancel-create-file-btn" class="secondary-btn">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Container (Add this if not already present) -->
+  <div id="notification-container"></div>
+
+  <!-- === SCRIPT LOADING ORDER === -->
+  <!-- Neutralino Globals FIRST -->
+  <script src="%PUBLIC_URL%/__neutralino_globals.js"></script>
+
+  <!-- Monaco Loader Setup -->
+  <script>
+    // We need to set this up as a global BEFORE loading the loader script
+    var require = {
+      paths: {
+        vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.39.0/min/vs",
+      },
+      // Optional: If running in Electron or similar, configure node integration
+      // 'vs/nls': { availableLanguages: {'*': 'en'} } // Example NLS config if needed
+    };
+  </script>
+  <!-- Monaco Loader Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.39.0/min/vs/loader.js"></script>
+
+  <!--
+        Monaco editor's main JS (editor.main.js) will be loaded asynchronously by the loader.
+        We will initialize our app *inside* the require callback in main.js
+        to ensure Monaco is ready.
+    -->
+
+  <!-- Your Application Bundle LAST -->
+  <!-- Ensure this path is correct based on your build process -->
+  <script src="bundle.js"></script>
+</body>
+
+</html>

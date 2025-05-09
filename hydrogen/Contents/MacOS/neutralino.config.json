@@ -1,0 +1,68 @@
+{
+  "applicationId": "com.hydrogen.macos",
+  "version": "1.0.0",
+  "defaultMode": "window",
+  "port": 0,
+  "documentRoot": "/dist/",
+  "url": "/",
+  "enableServer": true,
+  "enableNativeAPI": true,
+  "tokenSecurity": "one-time",
+  "logging": {
+    "enabled": true,
+    "writeToLogFile": true
+  },
+  "nativeAllowList": [
+    "app.*",
+    "os.*",
+    "filesystem.*",
+    "window.*",
+    "storage.*",
+    "debug.*"
+  ],
+  "globalVariables": {
+    "SETTINGS_VERSION": "1.0",
+    "APP_NAME": "Hydrogen-M",
+    "DEFAULT_THEME": "dark"
+  },
+  "modes": {
+    "window": {
+      "title": "Hydrogen-M",
+      "width": 800,
+      "height": 800,
+      "minWidth": 800,
+      "minHeight": 600,
+      "enableInspector": true,
+      "borderless": false,
+      "maximize": false,
+      "hidden": false,
+      "resizable": true,
+      "exitProcessOnClose": true,
+      "customStyles": {
+        "titleBarStyle": "hiddenInset",
+        "vibrancy": "under-window"
+      }
+    }
+  },
+  "cli": {
+    "binaryName": "hydrogen-m",
+    "resourcesPath": "/resources/",
+    "extensionsPath": "/extensions/",
+    "binaryVersion": "6.0.0",
+    "clientVersion": "6.0.0"
+  },
+  "buildScript": {
+    "mac": {
+      "architecture": [
+        "x64",
+        "arm64",
+        "universal"
+      ],
+      "minimumOS": "10.13.0",
+      "appName": "Hydrogen-M",
+      "appBundleName": "Hydrogen-M",
+      "appIdentifier": "com.hydrogen.macos",
+      "appIcon": "resources/icons/icon.icns"
+    }
+  }
+}

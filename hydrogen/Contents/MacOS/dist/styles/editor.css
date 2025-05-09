@@ -1,0 +1,363 @@
+/* Additional editor-specific styles */
+
+/* Focus outlines */
+:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 1px;
+}
+
+button:focus {
+    outline-offset: 2px;
+}
+
+/* Custom file icon styles */
+.file-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.file-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--glass-highlight), transparent);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    pointer-events: none;
+}
+
+.file-item:hover {
+    background-color: rgba(60, 60, 60, 0.7);
+    color: var(--text);
+}
+
+.file-item:hover::before {
+    opacity: 0.2;
+}
+
+.file-item.active {
+    background-color: rgba(0, 162, 255, 0.2);
+    color: var(--text);
+}
+
+.file-item.active::before {
+    opacity: 0.2;
+}
+
+.file-icon {
+    color: var(--primary);
+    font-size: 14px;
+    width: 16px;
+    text-align: center;
+}
+
+.file-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 13px;
+}
+
+.file-actions {
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.file-item:hover .file-actions {
+    opacity: 1;
+}
+
+.file-action-btn {
+    width: 22px;
+    height: 22px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 12px;
+    transition: all var(--transition-fast);
+}
+
+.file-action-btn:hover {
+    background-color: rgba(70, 70, 70, 0.7);
+    color: var(--text);
+}
+
+/* Folder styles */
+.folder-item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px;
+}
+
+.folder-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+    color: var(--text-muted);
+    position: relative;
+    overflow: hidden;
+}
+
+.folder-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--glass-highlight), transparent);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    pointer-events: none;
+}
+
+.folder-header:hover {
+    background-color: rgba(60, 60, 60, 0.7);
+    color: var(--text);
+}
+
+.folder-header:hover::before {
+    opacity: 0.2;
+}
+
+.folder-icon {
+    color: var(--warning);
+    font-size: 14px;
+    width: 16px;
+    text-align: center;
+}
+
+.folder-name {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.folder-collapse {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--transition-fast);
+}
+
+.folder-collapse.collapsed {
+    transform: rotate(-90deg);
+}
+
+.folder-content {
+    padding-left: 16px;
+    overflow: hidden;
+    max-height: 1000px; /* A large enough value to accommodate content */
+    transition: max-height var(--transition-normal);
+}
+
+.folder-content.collapsed {
+    max-height: 0;
+}
+
+/* Run Output panel */
+.output-panel {
+    position: fixed;
+    bottom: 40px; /* Height of bottom panel */
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background-color: rgba(30, 30, 30, 0.8);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    flex-direction: column;
+    z-index: 800;
+    transform: translateY(100%);
+    transition: transform var(--transition-normal);
+}
+
+.output-panel.visible {
+    transform: translateY(0);
+}
+
+.output-header {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(40, 40, 40, 0.6);
+}
+
+.output-header h3 {
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.output-content {
+    flex: 1;
+    padding: 12px;
+    overflow-y: auto;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    color: var(--text);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+.output-content .info {
+    color: var(--info);
+}
+
+.output-content .error {
+    color: var(--error);
+}
+
+.output-content .warning {
+    color: var(--warning);
+}
+
+.output-content .success {
+    color: var(--success);
+}
+
+/* Context menu */
+.context-menu {
+    position: absolute;
+    background-color: rgba(45, 45, 45, 0.9);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    padding: 4px 0;
+    min-width: 160px;
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.context-menu::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--glass-highlight), transparent);
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+.menu-item {
+    padding: 6px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color var(--transition-fast);
+    color: var(--text);
+    font-size: 13px;
+}
+
+.menu-item:hover {
+    background-color: rgba(60, 60, 60, 0.7);
+}
+
+.menu-item i {
+    width: 16px;
+    text-align: center;
+}
+
+.menu-separator {
+    height: 1px;
+    background-color: var(--glass-border);
+    margin: 4px 0;
+}
+
+/* Custom scrollbar for monaco editor */
+.monaco-editor .scrollbar .slider {
+    background-color: var(--accent) !important;
+    border-radius: var(--radius-sm) !important;
+}
+
+.monaco-editor .scrollbar .slider:hover {
+    background-color: var(--accent-hover) !important;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromBottom {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.monaco-editor .margin {
+    /* Styles for the margin (line numbers, glyphs) if needed */
+    /* background-color: #2a2a2a; Example */
+}
+
+/* Add fallback text color to the main editor div */
+/* This rule should ideally be in main.css with other layout rules,
+   but adding here for redundancy if main.css didn't cover it. */
+#monaco-editor {
+    color: var(--text);
+    /* Fallback color */
+}
